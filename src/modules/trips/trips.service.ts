@@ -49,7 +49,15 @@ export class TripsService {
     }
 
     const { expenses, ...tripData } = createTripDto;
-    const trip = await this.tripsRepository.create(tripData);
+    
+    // Convert date strings to Date objects
+    const tripDataWithDates = {
+      ...tripData,
+      plannedDepartureDate: new Date(tripData.plannedDepartureDate),
+      plannedArrivalDate: new Date(tripData.plannedArrivalDate),
+    };
+    
+    const trip = await this.tripsRepository.create(tripDataWithDates);
 
     // Create expenses if provided
     if (expenses && expenses.length > 0) {
@@ -118,7 +126,22 @@ export class TripsService {
       }
     }
 
-    await trip.update(updateTripDto);
+    // Convert date strings to Date objects if present
+    const updateDataWithDates: any = { ...updateTripDto };
+    if (updateTripDto.plannedDepartureDate) {
+      updateDataWithDates.plannedDepartureDate = new Date(updateTripDto.plannedDepartureDate);
+    }
+    if (updateTripDto.plannedArrivalDate) {
+      updateDataWithDates.plannedArrivalDate = new Date(updateTripDto.plannedArrivalDate);
+    }
+    if (updateTripDto.actualDepartureDate) {
+      updateDataWithDates.actualDepartureDate = new Date(updateTripDto.actualDepartureDate);
+    }
+    if (updateTripDto.actualArrivalDate) {
+      updateDataWithDates.actualArrivalDate = new Date(updateTripDto.actualArrivalDate);
+    }
+
+    await trip.update(updateDataWithDates);
     return this.findById(id);
   }
 
