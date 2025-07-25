@@ -1,0 +1,372 @@
+{
+  "info": {
+    "name": "Fleet Management System API",
+    "description": "Comprehensive API collection for the Fleet Management System demonstrating key workflows",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register Admin User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Admin\",\n  \"lastName\": \"User\",\n  \"email\": \"admin@fleetmanagement.com\",\n  \"password\": \"Admin123!\",\n  \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', response.access_token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@fleetmanagement.com\",\n  \"password\": \"Admin123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Truck Management",
+      "item": [
+        {
+          "name": "Create Truck",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"licensePlate\": \"ABC-123\",\n  \"make\": \"Volvo\",\n  \"model\": \"VNL 860\",\n  \"year\": 2022,\n  \"vin\": \"1FUJGHDV8NLBX1234\",\n  \"fuelCapacity\": 300,\n  \"loadCapacity\": 40000,\n  \"currentMileage\": 50000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/trucks",
+              "host": ["{{base_url}}"],
+              "path": ["trucks"]
+            }
+          }
+        },
+        {
+          "name": "Get All Trucks",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/trucks",
+              "host": ["{{base_url}}"],
+              "path": ["trucks"]
+            }
+          }
+        },
+        {
+          "name": "Get Available Trucks",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/trucks/available",
+              "host": ["{{base_url}}"],
+              "path": ["trucks", "available"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Driver Management",
+      "item": [
+        {
+          "name": "Create Driver",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@email.com\",\n  \"phoneNumber\": \"+1234567890\",\n  \"licenseNumber\": \"DL123456789\",\n  \"licenseExpiryDate\": \"2025-12-31\",\n  \"dateOfBirth\": \"1985-05-15\",\n  \"hireDate\": \"2024-01-01\",\n  \"address\": \"123 Main St, City, State 12345\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/drivers",
+              "host": ["{{base_url}}"],
+              "path": ["drivers"]
+            }
+          }
+        },
+        {
+          "name": "Get All Drivers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/drivers",
+              "host": ["{{base_url}}"],
+              "path": ["drivers"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Client Management",
+      "item": [
+        {
+          "name": "Create Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"ABC Logistics\",\n  \"email\": \"contact@abclogistics.com\",\n  \"phoneNumber\": \"+1987654321\",\n  \"address\": \"456 Business Ave, Corporate City, State 54321\",\n  \"contactPerson\": \"Jane Smith\",\n  \"taxId\": \"TAX123456789\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/clients",
+              "host": ["{{base_url}}"],
+              "path": ["clients"]
+            }
+          }
+        },
+        {
+          "name": "Get All Clients",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/clients",
+              "host": ["{{base_url}}"],
+              "path": ["clients"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trip Management",
+      "item": [
+        {
+          "name": "Create Trip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tripNumber\": \"TRP-001\",\n  \"origin\": \"New York, NY\",\n  \"destination\": \"Los Angeles, CA\",\n  \"plannedStartDate\": \"2024-02-01T08:00:00Z\",\n  \"plannedEndDate\": \"2024-02-04T18:00:00Z\",\n  \"distance\": 2800,\n  \"revenue\": 5000,\n  \"truckId\": \"REPLACE_WITH_TRUCK_ID\",\n  \"driverId\": \"REPLACE_WITH_DRIVER_ID\",\n  \"clientId\": \"REPLACE_WITH_CLIENT_ID\",\n  \"notes\": \"Cross-country delivery\",\n  \"expenses\": [\n    {\n      \"type\": \"fuel\",\n      \"amount\": 800,\n      \"description\": \"Fuel for cross-country trip\",\n      \"expenseDate\": \"2024-02-01T10:00:00Z\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/trips",
+              "host": ["{{base_url}}"],
+              "path": ["trips"]
+            }
+          }
+        },
+        {
+          "name": "Get All Trips",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/trips",
+              "host": ["{{base_url}}"],
+              "path": ["trips"]
+            }
+          }
+        },
+        {
+          "name": "Start Trip",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{base_url}}/trips/REPLACE_WITH_TRIP_ID/start",
+              "host": ["{{base_url}}"],
+              "path": ["trips", "REPLACE_WITH_TRIP_ID", "start"]
+            }
+          }
+        },
+        {
+          "name": "Complete Trip",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{base_url}}/trips/REPLACE_WITH_TRIP_ID/complete",
+              "host": ["{{base_url}}"],
+              "path": ["trips", "REPLACE_WITH_TRIP_ID", "complete"]
+            }
+          }
+        },
+        {
+          "name": "Add Trip Expense",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"maintenance\",\n  \"amount\": 150,\n  \"description\": \"Oil change and inspection\",\n  \"expenseDate\": \"2024-02-02T14:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/trips/REPLACE_WITH_TRIP_ID/expenses",
+              "host": ["{{base_url}}"],
+              "path": ["trips", "REPLACE_WITH_TRIP_ID", "expenses"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/reports/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["reports", "dashboard"]
+            }
+          }
+        },
+        {
+          "name": "Driver Reports - Current Month",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/reports/drivers?period=monthly",
+              "host": ["{{base_url}}"],
+              "path": ["reports", "drivers"],
+              "query": [
+                {
+                  "key": "period",
+                  "value": "monthly"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Truck Reports - Yearly",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/reports/trucks?period=yearly&year=2024",
+              "host": ["{{base_url}}"],
+              "path": ["reports", "trucks"],
+              "query": [
+                {
+                  "key": "period",
+                  "value": "yearly"
+                },
+                {
+                  "key": "year",
+                  "value": "2024"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Client Reports - Custom Period",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/reports/clients?period=custom&startDate=2024-01-01T00:00:00Z&endDate=2024-12-31T23:59:59Z",
+              "host": ["{{base_url}}"],
+              "path": ["reports", "clients"],
+              "query": [
+                {
+                  "key": "period",
+                  "value": "custom"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2024-01-01T00:00:00Z"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2024-12-31T23:59:59Z"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
