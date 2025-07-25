@@ -28,7 +28,7 @@ export const getSequelizeConfig = (configService: ConfigService): SequelizeModul
     host: configService.get<string>('DB_HOST', 'localhost'),
     port: configService.get<number>('DB_PORT', 5432),
     username: configService.get<string>('DB_USERNAME', 'postgres'),
-    password: configService.get<string>('DB_PASSWORD', 'password'),
+    password: configService.get<string>('DB_PASSWORD', 'rumirumi'),
     database: configService.get<string>('DB_DATABASE', 'fleet_management'),
     models: [User, Truck, Driver, Client, Trip, TripExpense],
     autoLoadModels: true,
