@@ -2,15 +2,10 @@ import { IsString, IsNotEmpty, IsEmail, IsDateString, IsOptional, IsBoolean } fr
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateDriverDto {
-  @ApiProperty({ example: 'John' })
+  @ApiProperty({ example: 'John Doe' })
   @IsString()
   @IsNotEmpty()
-  firstName: string;
-
-  @ApiProperty({ example: 'Doe' })
-  @IsString()
-  @IsNotEmpty()
-  lastName: string;
+  fullName: string;
 
   @ApiProperty({ example: 'DL123456789' })
   @IsString()
@@ -43,18 +38,28 @@ export class CreateDriverDto {
   @ApiProperty({ example: '2020-01-15' })
   @IsDateString()
   hireDate: string;
+
+  @ApiProperty({ example: 'Jane Doe' })
+  @IsString()
+  @IsNotEmpty()
+  emergencyContactName: string;
+
+  @ApiProperty({ example: '+1987654321' })
+  @IsString()
+  @IsNotEmpty()
+  emergencyContactPhone: string;
+
+  @ApiPropertyOptional({ example: 'Additional notes about the driver' })
+  @IsString()
+  @IsOptional()
+  notes?: string;
 }
 
 export class UpdateDriverDto {
-  @ApiPropertyOptional({ example: 'John' })
+  @ApiPropertyOptional({ example: 'John Doe' })
   @IsString()
   @IsOptional()
-  firstName?: string;
-
-  @ApiPropertyOptional({ example: 'Doe' })
-  @IsString()
-  @IsOptional()
-  lastName?: string;
+  fullName?: string;
 
   @ApiPropertyOptional({ example: 'DL123456789' })
   @IsString()
@@ -90,6 +95,21 @@ export class UpdateDriverDto {
   @IsDateString()
   @IsOptional()
   hireDate?: string;
+
+  @ApiPropertyOptional({ example: 'Jane Doe' })
+  @IsString()
+  @IsOptional()
+  emergencyContactName?: string;
+
+  @ApiPropertyOptional({ example: '+1987654321' })
+  @IsString()
+  @IsOptional()
+  emergencyContactPhone?: string;
+
+  @ApiPropertyOptional({ example: 'Additional notes about the driver' })
+  @IsString()
+  @IsOptional()
+  notes?: string;
 
   @ApiPropertyOptional({ example: true })
   @IsBoolean()

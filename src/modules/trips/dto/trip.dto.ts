@@ -46,16 +46,26 @@ export class CreateTripDto {
 
   @ApiProperty({ example: '2023-12-01T08:00:00Z' })
   @IsDateString()
-  plannedStartDate: string;
+  plannedDepartureDate: string;
 
   @ApiProperty({ example: '2023-12-03T18:00:00Z' })
   @IsDateString()
-  plannedEndDate: string;
+  plannedArrivalDate: string;
 
   @ApiProperty({ example: 800.5 })
   @IsNumber()
   @Type(() => Number)
   distance: number;
+
+  @ApiProperty({ example: 1500.75 })
+  @IsNumber()
+  @Type(() => Number)
+  cargoWeight: number;
+
+  @ApiProperty({ example: 'Electronics and computer equipment' })
+  @IsString()
+  @IsNotEmpty()
+  cargoDescription: string;
 
   @ApiProperty({ example: 2500.00 })
   @IsNumber()
@@ -106,22 +116,22 @@ export class UpdateTripDto {
   @ApiPropertyOptional({ example: '2023-12-01T08:00:00Z' })
   @IsDateString()
   @IsOptional()
-  plannedStartDate?: string;
+  plannedDepartureDate?: string;
 
   @ApiPropertyOptional({ example: '2023-12-01T09:00:00Z' })
   @IsDateString()
   @IsOptional()
-  actualStartDate?: string;
+  actualDepartureDate?: string;
 
   @ApiPropertyOptional({ example: '2023-12-03T18:00:00Z' })
   @IsDateString()
   @IsOptional()
-  plannedEndDate?: string;
+  plannedArrivalDate?: string;
 
   @ApiPropertyOptional({ example: '2023-12-03T17:30:00Z' })
   @IsDateString()
   @IsOptional()
-  actualEndDate?: string;
+  actualArrivalDate?: string;
 
   @ApiPropertyOptional({ example: 800.5 })
   @IsNumber()
@@ -129,11 +139,28 @@ export class UpdateTripDto {
   @IsOptional()
   distance?: number;
 
+  @ApiPropertyOptional({ example: 1500.75 })
+  @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
+  cargoWeight?: number;
+
+  @ApiPropertyOptional({ example: 'Electronics and computer equipment' })
+  @IsString()
+  @IsOptional()
+  cargoDescription?: string;
+
   @ApiPropertyOptional({ example: 2500.00 })
   @IsNumber()
   @Type(() => Number)
   @IsOptional()
   revenue?: number;
+
+  @ApiPropertyOptional({ example: 250.00 })
+  @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
+  driverEarnings?: number;
 
   @ApiPropertyOptional({ enum: TripStatus })
   @IsEnum(TripStatus)

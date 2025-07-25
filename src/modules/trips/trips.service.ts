@@ -136,7 +136,7 @@ export class TripsService {
 
     return this.update(id, {
       status: TripStatus.IN_PROGRESS,
-      actualStartDate: new Date().toISOString(),
+      actualDepartureDate: new Date().toISOString(),
     });
   }
 
@@ -149,7 +149,7 @@ export class TripsService {
 
     const completedTrip = await this.update(id, {
       status: TripStatus.COMPLETED,
-      actualEndDate: new Date().toISOString(),
+      actualArrivalDate: new Date().toISOString(),
     });
 
     // Update truck mileage

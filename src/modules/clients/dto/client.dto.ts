@@ -5,7 +5,12 @@ export class CreateClientDto {
   @ApiProperty({ example: 'ABC Logistics Inc.' })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  companyName: string;
+
+  @ApiProperty({ example: 'John Smith' })
+  @IsString()
+  @IsNotEmpty()
+  contactPerson: string;
 
   @ApiProperty({ example: 'contact@abclogistics.com' })
   @IsEmail()
@@ -22,22 +27,40 @@ export class CreateClientDto {
   @IsNotEmpty()
   address: string;
 
-  @ApiPropertyOptional({ example: 'John Smith' })
+  @ApiPropertyOptional({ example: '456 Business Ave, City, State 12345' })
   @IsString()
   @IsOptional()
-  contactPerson?: string;
+  billingAddress?: string;
 
   @ApiPropertyOptional({ example: 'TAX123456789' })
   @IsString()
   @IsOptional()
   taxId?: string;
+
+  @ApiPropertyOptional({ example: 30, description: 'Payment terms in days' })
+  @IsOptional()
+  paymentTerms?: number;
+
+  @ApiPropertyOptional({ example: 50000.00, description: 'Credit limit' })
+  @IsOptional()
+  creditLimit?: number;
+
+  @ApiPropertyOptional({ example: 'Additional notes about the client' })
+  @IsString()
+  @IsOptional()
+  notes?: string;
 }
 
 export class UpdateClientDto {
   @ApiPropertyOptional({ example: 'ABC Logistics Inc.' })
   @IsString()
   @IsOptional()
-  name?: string;
+  companyName?: string;
+
+  @ApiPropertyOptional({ example: 'John Smith' })
+  @IsString()
+  @IsOptional()
+  contactPerson?: string;
 
   @ApiPropertyOptional({ example: 'contact@abclogistics.com' })
   @IsEmail()
@@ -54,15 +77,28 @@ export class UpdateClientDto {
   @IsOptional()
   address?: string;
 
-  @ApiPropertyOptional({ example: 'John Smith' })
+  @ApiPropertyOptional({ example: '456 Business Ave, City, State 12345' })
   @IsString()
   @IsOptional()
-  contactPerson?: string;
+  billingAddress?: string;
 
   @ApiPropertyOptional({ example: 'TAX123456789' })
   @IsString()
   @IsOptional()
   taxId?: string;
+
+  @ApiPropertyOptional({ example: 30, description: 'Payment terms in days' })
+  @IsOptional()
+  paymentTerms?: number;
+
+  @ApiPropertyOptional({ example: 50000.00, description: 'Credit limit' })
+  @IsOptional()
+  creditLimit?: number;
+
+  @ApiPropertyOptional({ example: 'Additional notes about the client' })
+  @IsString()
+  @IsOptional()
+  notes?: string;
 
   @ApiPropertyOptional({ example: true })
   @IsBoolean()
