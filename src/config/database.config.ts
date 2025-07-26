@@ -9,12 +9,14 @@ import { TripExpense } from '@/modules/trips/entities/trip-expense.entity';
 
 export const getSequelizeConfig = (configService: ConfigService): SequelizeModuleOptions => {
   const nodeEnv = configService.get<string>('NODE_ENV', 'development');
+  const databaseUrl = configService.get<string>('DATABASE_URL');
   
-  if (nodeEnv === 'development') {
-    // Use SQLite for development
+  // Use SQLite if DATABASE_URL is a file path or in development
+  if (nodeEnv === 'development' || (databaseUrl && databaseUrl.startsWith('file:'))) {
+    const storage = databaseUrl ? databaseUrl.replace('file:', '') : 'fleet_management.db';
     return {
       dialect: 'sqlite',
-      storage: 'fleet_management.db',
+      storage,
       models: [User, Truck, Driver, Client, Trip, TripExpense],
       autoLoadModels: true,
       synchronize: true,

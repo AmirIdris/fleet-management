@@ -9,6 +9,7 @@ import { DriversModule } from '@/modules/drivers/drivers.module';
 import { ClientsModule } from '@/modules/clients/clients.module';
 import { TripsModule } from '@/modules/trips/trips.module';
 import { ReportsModule } from '@/modules/reports/reports.module';
+import { HealthController } from '@/health/health.controller';
 
 @Module({
   imports: [
@@ -29,5 +30,6 @@ import { ReportsModule } from '@/modules/reports/reports.module';
     TripsModule,
     ReportsModule,
   ],
+  controllers: [HealthController],
 })
 export class AppModule {}

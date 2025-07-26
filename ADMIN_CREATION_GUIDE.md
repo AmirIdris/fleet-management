@@ -10,7 +10,9 @@ You now have a powerful CLI tool to create admin users for your Fleet Management
 
 ## 🚀 Quick Start
 
-### Method 1: Interactive Mode (Recommended for Manual Setup)
+### For Local Development (Node.js)
+
+#### Method 1: Interactive Mode (Recommended for Manual Setup)
 
 Simply run the command without any arguments for a guided experience:
 
@@ -24,12 +26,52 @@ You'll be prompted for:
 - Password (minimum 6 characters)
 - Full name (optional)
 
-### Method 2: Non-Interactive Mode (Perfect for Scripts)
+#### Method 2: Non-Interactive Mode (Perfect for Scripts)
 
 Provide all information as command-line arguments:
 
 ```bash
 npm run create-admin -- -u admin -e admin@company.com -p securepass123 -f "System Administrator"
+```
+
+### For Docker Deployment 🐳
+
+If your application is running in Docker containers, use these commands instead:
+
+#### Method 1: Interactive Mode (Docker)
+
+```bash
+docker exec -it fleet-management-app npm run create-admin
+```
+
+Or if using Docker Compose:
+
+```bash
+docker-compose exec fleet-management npm run create-admin
+```
+
+#### Method 2: Non-Interactive Mode (Docker)
+
+```bash
+docker exec -it fleet-management-app npm run create-admin -- -u admin -e admin@company.com -p securepass123 -f "System Administrator"
+```
+
+Or with Docker Compose:
+
+```bash
+docker-compose exec fleet-management npm run create-admin -- -u admin -e admin@company.com -p securepass123 -f "System Administrator"
+```
+
+#### Quick Docker Examples
+
+**Create admin with default credentials:**
+```bash
+docker exec -it fleet-management-app npm run create-admin -- -u admin -e admin@fleet.com -p admin123 -f "Fleet Admin"
+```
+
+**Create production admin:**
+```bash
+docker exec -it fleet-management-app npm run create-admin -- -u prod-admin -e admin@yourcompany.com -p "SecurePassword123!" -f "Production Administrator"
 ```
 
 ## 📋 Command Options
@@ -46,6 +88,8 @@ npm run create-admin -- -u admin -e admin@company.com -p securepass123 -f "Syste
 
 After creating an admin user, you can verify it works by:
 
+### For Local Development:
+
 1. **Starting the server** (if not already running):
    ```bash
    npm run start:dev
@@ -58,6 +102,25 @@ After creating an admin user, you can verify it works by:
 
 3. **Using Swagger UI**: Visit `http://localhost:3000/api/docs` and test the login endpoint
 
+### For Docker Deployment:
+
+1. **Ensure containers are running**:
+   ```bash
+   docker-compose ps
+   ```
+
+2. **Testing login via API** (Docker):
+   ```powershell
+   Invoke-RestMethod -Uri "http://localhost:3000/api/auth/login" -Method POST -ContentType "application/json" -Body '{"usernameOrEmail":"admin","password":"your_password"}'
+   ```
+
+3. **Using Swagger UI**: Visit `http://localhost:3000/api/docs` and test the login endpoint
+
+4. **Check container logs** for confirmation:
+   ```bash
+   docker logs fleet-management-app
+   ```
+
 ## 🔒 Security Features
 
 - **Password Hashing**: All passwords are automatically hashed using bcrypt
@@ -67,19 +130,43 @@ After creating an admin user, you can verify it works by:
 
 ## 📝 Example Usage Scenarios
 
-### Development Environment Setup
+### Local Development Environment
+
+**Development Environment Setup:**
 ```bash
 npm run create-admin -- -u dev-admin -e dev@localhost.com -p devpass123
 ```
 
-### Production Deployment
+**Production Deployment:**
 ```bash
 npm run create-admin -- -u prod-admin -e admin@yourcompany.com -p "YourSecurePassword123!" -f "Production Administrator"
 ```
 
-### Emergency Admin Creation
+**Emergency Admin Creation:**
 ```bash
 npm run create-admin -- -u emergency -e emergency@company.com -p "EmergencyPass456!"
+```
+
+### Docker Environment
+
+**Development Environment Setup (Docker):**
+```bash
+docker exec -it fleet-management-app npm run create-admin -- -u dev-admin -e dev@localhost.com -p devpass123
+```
+
+**Production Deployment (Docker):**
+```bash
+docker exec -it fleet-management-app npm run create-admin -- -u prod-admin -e admin@yourcompany.com -p "YourSecurePassword123!" -f "Production Administrator"
+```
+
+**Emergency Admin Creation (Docker):**
+```bash
+docker exec -it fleet-management-app npm run create-admin -- -u emergency -e emergency@company.com -p "EmergencyPass456!"
+```
+
+**Quick Docker Setup for Testing:**
+```bash
+docker exec -it fleet-management-app npm run create-admin -- -u admin -e admin@test.com -p admin123 -f "Test Admin"
 ```
 
 ## 🎉 Success!

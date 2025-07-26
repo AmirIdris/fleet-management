@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  fleet-management:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fleet-management-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=file:./fleet_management.db
+      - JWT_SECRET=docker-fleet-management-jwt-secret-key-2024
+      - JWT_EXPIRES_IN=7d
+      - API_PREFIX=api
+    volumes:
+      - ./fleet_management.db:/app/fleet_management.db
+      - ./uploads:/app/uploads
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add a reverse proxy (nginx)
+  nginx:
+    image: nginx:alpine
+    container_name: fleet-management-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - fleet-management
+    restart: unless-stopped
+
+networks:
+  default:
+    name: fleet-management-network
